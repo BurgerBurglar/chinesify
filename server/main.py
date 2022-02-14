@@ -29,7 +29,7 @@ def get_ming(
         raise HTTPException(status_code=400, detail=detail)
 
 
-@app.get("/xings/")
+@app.get("/xings/{name}")
 def get_xing(
     name: str,
     is_transliteration: bool = True,
