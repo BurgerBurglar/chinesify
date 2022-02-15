@@ -94,7 +94,7 @@ const Home: NextPage = () => {
             ))}
           </select>
           <select className="text-red-800" name="ming2">
-            {mingOptions[1].map((ming2) => (
+            {(mingOptions[1] ?? mingOptions[0]).map((ming2) => (
               <option className="text-lg" key={ming2} value={ming2}>
                 {ming2}
               </option>
