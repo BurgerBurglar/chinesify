@@ -38,7 +38,7 @@ const Home: NextPage = () => {
           <label htmlFor="given-name">Given Name</label>
           <input
             id="given-name"
-            className="text-3xl outline outline-1 outline-gray-200"
+            className="text-3xl outline outline-1 outline-gray-200 text-red-800"
             type="text"
             value={givenName}
             onChange={(e) => setGivenName(e.target.value)}
@@ -48,7 +48,7 @@ const Home: NextPage = () => {
           <label htmlFor="family-name">Family Name</label>
           <input
             id="family-name"
-            className="text-3xl outline outline-1 outline-gray-200"
+            className="text-3xl outline outline-1 outline-gray-200 text-green-800"
             type="text"
             value={familyName}
             onChange={(e) => setFamilyName(e.target.value)}
@@ -79,21 +79,21 @@ const Home: NextPage = () => {
           generate
         </button>
         <div className="flex gap-2 text-[5rem]">
-          <select name="xing">
+          <select className="text-green-800" name="xing">
             {xingOptions.map((xing) => (
               <option className="text-lg" key={xing} value={xing}>
                 {xing}
               </option>
             ))}
           </select>
-          <select name="ming1">
+          <select className="text-red-800" name="ming1">
             {mingOptions[0].map((ming1) => (
               <option className="text-lg" key={ming1} value={ming1}>
                 {ming1}
               </option>
             ))}
           </select>
-          <select name="ming2">
+          <select className="text-red-800" name="ming2">
             {mingOptions[1].map((ming2) => (
               <option className="text-lg" key={ming2} value={ming2}>
                 {ming2}
