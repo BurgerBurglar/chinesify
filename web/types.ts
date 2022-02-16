@@ -1,5 +1,11 @@
 export type Gender = "m" | "f";
 
+export interface Inputs {
+  givenName: string;
+  familyName: string;
+  gender: Gender;
+}
+
 export interface CharDetails {
   char: string;
   pinyin_tone: string;
