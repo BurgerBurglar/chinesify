@@ -8,12 +8,7 @@ import { useClipboard } from "../hooks/useClipBoard";
 import { CharDetails, Inputs } from "../types";
 
 const Home: NextPage = () => {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<Inputs>();
+  const { register, handleSubmit } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async ({
     givenName,
@@ -67,7 +62,8 @@ const Home: NextPage = () => {
               id="given-name"
               className="text-3xl outline outline-1 outline-gray-200 text-red-800"
               type="text"
-              {...register("givenName")}
+              required
+              {...register("givenName", { required: true })}
             />
           </div>
           <div className="flex flex-col justify-between w-full">
@@ -76,7 +72,8 @@ const Home: NextPage = () => {
               id="family-name"
               className="text-3xl outline outline-1 outline-gray-200 text-green-800"
               type="text"
-              {...register("familyName")}
+              required
+              {...register("familyName", { required: true })}
             />
           </div>
           <fieldset id="gender" className="flex gap-2 items-center">
