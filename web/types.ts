@@ -8,7 +8,7 @@ export interface Inputs {
 
 export interface CharDetails {
   char: string;
-  pinyin_tone: string;
+  pinyin: string;
 }
 
 export interface MingParams {

@@ -23,7 +23,7 @@ const CharSelect: React.FC<CharSelectProps> = ({
   return (
     <div className="flex flex-col items-center">
       <div className={`text-${color}-800 text-[2rem]`}>
-        {chars[selectIndex]?.pinyin_tone}
+        {chars[selectIndex]?.pinyin}
       </div>
       <select
         className={`text-${color}-800 text-[5rem]`}
