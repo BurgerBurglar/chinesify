@@ -3,6 +3,7 @@ import Head from "next/head";
 import { ChangeEvent, useState } from "react";
 import CharSelect from "../components/CharSelect";
 import { getMingOptions, getXingOptions } from "../fetch";
+import { useClipboard } from "../hooks/useClipBoard";
 import { CharDetails, Gender } from "../types";
 
 const Home: NextPage = () => {
@@ -14,6 +15,24 @@ const Home: NextPage = () => {
   >([[], []]);
   const [xingOptions, setXingOptions] = useState<CharDetails[]>([]);
 
+  const [selectedIndices, setSelectedIndices] = useState([0, 0, 0]);
+
+  const setSelectedIndex = (selectIndex: number, charIndex: number) => {
+    setSelectedIndices((prev) => {
+      const duplication = [...prev];
+      duplication[charIndex] = selectIndex;
+      return duplication;
+    });
+  };
+
+  const fullname = [
+    xingOptions[selectedIndices[0]]?.char,
+    mingOptions[0][selectedIndices[1]]?.char,
+    mingOptions[1][selectedIndices[2]]?.char,
+  ].join("");
+
+  const { hasCopied, onCopy } = useClipboard(fullname);
+
   const handleGenderChange = (e: ChangeEvent<HTMLInputElement>) => {
     setGender(e.target.value as Gender);
   };
@@ -24,6 +43,8 @@ const Home: NextPage = () => {
 
     const newXingOptions = await getXingOptions(familyName);
     setXingOptions(newXingOptions);
+
+    setSelectedIndices([0, 0, 0]);
   };
 
   return (
@@ -79,10 +100,29 @@ const Home: NextPage = () => {
           generate
         </button>
         <div className="flex gap-2">
-          <CharSelect chars={xingOptions} isXing />
-          <CharSelect chars={mingOptions[0]} />
-          <CharSelect chars={mingOptions[1]} />
+          <CharSelect
+            chars={xingOptions}
+            isXing
+            selectIndex={selectedIndices[0]}
+            setSelectIndex={(selectIndex) => setSelectedIndex(selectIndex, 0)}
+          />
+          <CharSelect
+            chars={mingOptions[0]}
+            selectIndex={selectedIndices[1]}
+            setSelectIndex={(selectIndex) => setSelectedIndex(selectIndex, 1)}
+          />
+          <CharSelect
+            chars={mingOptions[1]}
+            selectIndex={selectedIndices[2]}
+            setSelectIndex={(selectIndex) => setSelectedIndex(selectIndex, 2)}
+          />
         </div>
+        <button
+          className="rounded-md bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white text-xl w-fit px-2 py-1"
+          onClick={onCopy}
+        >
+          {hasCopied ? "Copied" : "Copy"}
+        </button>
       </div>
     </>
   );
