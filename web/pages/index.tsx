@@ -1,18 +1,18 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { ChangeEvent, useState } from "react";
+import CharSelect from "../components/CharSelect";
 import { getMingOptions, getXingOptions } from "../fetch";
-import { Gender } from "../types";
+import { CharDetails, Gender } from "../types";
 
 const Home: NextPage = () => {
   const [givenName, setGivenName] = useState("");
   const [familyName, setFamilyName] = useState("");
   const [gender, setGender] = useState<Gender>("m");
-  const [mingOptions, setMingOptions] = useState<[string[], string[]]>([
-    [],
-    [],
-  ]);
-  const [xingOptions, setXingOptions] = useState<string[]>([]);
+  const [mingOptions, setMingOptions] = useState<
+    [CharDetails[], CharDetails[]]
+  >([[], []]);
+  const [xingOptions, setXingOptions] = useState<CharDetails[]>([]);
 
   const handleGenderChange = (e: ChangeEvent<HTMLInputElement>) => {
     setGender(e.target.value as Gender);
@@ -73,33 +73,15 @@ const Home: NextPage = () => {
           <label htmlFor="Female">Female</label>
         </fieldset>
         <button
-          className="rounded-md bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white text-xl  w-fit px-2 py-1 "
+          className="rounded-md bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white text-xl w-fit px-2 py-1"
           onClick={handleClick}
         >
           generate
         </button>
-        <div className="flex gap-2 text-[5rem]">
-          <select className="text-green-800" name="xing">
-            {xingOptions.map((xing) => (
-              <option className="text-lg" key={xing} value={xing}>
-                {xing}
-              </option>
-            ))}
-          </select>
-          <select className="text-red-800" name="ming1">
-            {mingOptions[0].map((ming1) => (
-              <option className="text-lg" key={ming1} value={ming1}>
-                {ming1}
-              </option>
-            ))}
-          </select>
-          <select className="text-red-800" name="ming2">
-            {(mingOptions[1] ?? mingOptions[0]).map((ming2) => (
-              <option className="text-lg" key={ming2} value={ming2}>
-                {ming2}
-              </option>
-            ))}
-          </select>
+        <div className="flex gap-2">
+          <CharSelect chars={xingOptions} isXing />
+          <CharSelect chars={mingOptions[0]} />
+          <CharSelect chars={mingOptions[1]} />
         </div>
       </div>
     </>

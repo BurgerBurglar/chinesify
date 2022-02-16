@@ -1,5 +1,10 @@
 export type Gender = "m" | "f";
 
+export interface CharDetails {
+  char: string;
+  pinyin_tone: string;
+}
+
 export interface MingParams {
   gender: Gender;
   is_transliteration?: boolean;
@@ -7,7 +12,7 @@ export interface MingParams {
 
 export interface MingResult {
   translation: string;
-  options: [string[], string[]];
+  options: [CharDetails[], CharDetails[]];
 }
 
 export interface XingParams {
@@ -16,5 +21,5 @@ export interface XingParams {
 
 export interface XingResult {
   translation: string;
-  options: string[];
+  options: CharDetails[];
 }
