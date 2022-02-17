@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { MdCheck, MdContentCopy, MdPlayCircleOutline } from "react-icons/md";
 import useSWRImmutable from "swr/immutable";
 import CharSelect from "../components/CharSelect";
 import NameForm from "../components/NameForm";
@@ -76,7 +77,7 @@ const Home: NextPage = () => {
           return audio;
         });
 
-  const { onCopy } = useClipboard(fullname);
+  const { hasCopied, onCopy } = useClipboard(fullname);
 
   const onSubmit: SubmitHandler<Inputs> = async () => {
     setErrors([]);
@@ -147,13 +148,18 @@ const Home: NextPage = () => {
                   className="rounded-full bg-sky-200 hover:bg-sky-300 text-sky-900 text-md w-fit px-4 py-1"
                   onClick={onCopy}
                 >
-                  copy
+                  <div className="flex items-center gap-1">
+                    {hasCopied ? <MdCheck /> : <MdContentCopy />} copy
+                  </div>
                 </button>
                 <button
                   className="rounded-full bg-sky-200 hover:bg-sky-300 text-sky-900 text-md w-fit px-4 py-1"
                   onClick={onPlay}
                 >
-                  pronounce
+                  <div className="flex items-center gap-1">
+                    <MdPlayCircleOutline />
+                    pronounce
+                  </div>
                 </button>
               </div>
             </div>

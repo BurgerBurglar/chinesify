@@ -4,6 +4,7 @@ import {
   UseFormHandleSubmit,
   UseFormRegister,
 } from "react-hook-form";
+import { RiMagicLine } from "react-icons/ri";
 import { Inputs } from "../types";
 
 interface NameFormProps {
@@ -49,7 +50,9 @@ const NameForm: React.FC<NameFormProps> = ({
         <label htmlFor="Female">Female</label>
       </fieldset>
       <button className="rounded-full bg-sky-600 hover:bg-sky-700 active:bg-sky-900 text-white text-xl w-fit px-4 py-1">
-        generate
+        <div className="flex items-center gap-2">
+          <RiMagicLine /> generate
+        </div>
       </button>
     </form>
   );
