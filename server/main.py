@@ -8,6 +8,9 @@ app = FastAPI()
 
 origins = [
     "http://localhost:3000",
+    "https://chinesify.vercel.app/",
+    "https://chinesify-burgerburglar.vercel.app/",
+    "https://chinesify.shuo.rocks/",
 ]
 
 app.add_middleware(
