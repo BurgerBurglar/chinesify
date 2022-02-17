@@ -6,12 +6,7 @@ from translate import translate
 
 app = FastAPI()
 
-origins = [
-    "http://localhost:3000",
-    "https://chinesify.vercel.app/",
-    "https://chinesify-burgerburglar.vercel.app/",
-    "https://chinesify.shuo.rocks/",
-]
+origins = ["*"]
 
 app.add_middleware(
     CORSMiddleware,
