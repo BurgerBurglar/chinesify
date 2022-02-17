@@ -1,7 +1,7 @@
 import { MingParams, MingResult, XingParams, XingResult } from "./types";
 import axios from "axios";
 
-const BASE_URL = "https://name-chinesify.herokuapp.com";
+const BASE_URL = "https://chinesify.herokuapp.com";
 
 export const getMingOptions = async (givenName: string, params: MingParams) => {
   const response = await axios.get<MingResult>(
