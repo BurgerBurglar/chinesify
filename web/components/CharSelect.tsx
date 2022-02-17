@@ -26,7 +26,7 @@ const CharSelect: React.FC<CharSelectProps> = ({
         {chars[selectIndex]?.pinyin}
       </div>
       <select
-        className={`text-${color}-800 text-[5rem]`}
+        className={`text-${color}-800 text-[5rem] w-[1.3em]`}
         name="xing"
         value={selectIndex}
         onChange={handleChange}
