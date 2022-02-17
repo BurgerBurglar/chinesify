@@ -14,7 +14,7 @@ const NameForm: React.FC<NameFormProps> = ({ onSubmit }) => {
   });
   return (
     <form
-      className="flex flex-col items-center gap-2 text-sky-900"
+      className="flex flex-col items-center gap-2 text-sky-900 w-full"
       onSubmit={handleSubmit(onSubmit)}
     >
       <legend className="text-2xl">Tell me about yourself</legend>
