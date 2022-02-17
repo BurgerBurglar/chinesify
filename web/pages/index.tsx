@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import CharSelect from "../components/CharSelect";
 import { getMingOptions, getXingOptions } from "../fetch";
@@ -10,20 +10,6 @@ import playAudioFiles from "../utils/playAudioFiles";
 
 const Home: NextPage = () => {
   const { register, handleSubmit } = useForm<Inputs>();
-
-  const onSubmit: SubmitHandler<Inputs> = async ({
-    givenName,
-    familyName,
-    gender,
-  }) => {
-    const newMingOptions = await getMingOptions(givenName, { gender });
-    setMingOptions(newMingOptions);
-
-    const newXingOptions = await getXingOptions(familyName);
-    setXingOptions(newXingOptions);
-
-    setSelectedIndices([0, 0, 0]);
-  };
 
   const [mingOptions, setMingOptions] = useState<
     [CharDetails[], CharDetails[]]
@@ -40,27 +26,38 @@ const Home: NextPage = () => {
     });
   };
 
-  const selectedName = useMemo<(CharDetails | undefined)[]>(
-    () => [
-      xingOptions[selectedIndices[0]],
-      mingOptions[0][selectedIndices[1]],
-      mingOptions[1][selectedIndices[2]],
-    ],
-    [mingOptions, selectedIndices, xingOptions]
-  );
+  const selectedName = [
+    xingOptions[selectedIndices[0]],
+    mingOptions[0][selectedIndices[1]],
+    mingOptions[1][selectedIndices[2]],
+  ];
 
   const fullname = selectedName.map((char) => char?.char).join("");
 
+  const pronunciations =
+    typeof Audio === "undefined"
+      ? []
+      : selectedName.map((char) => {
+          const audio = new Audio(char?.pronunciation);
+          audio.playbackRate = 2;
+          return audio;
+        });
+
   const { hasCopied, onCopy } = useClipboard(fullname);
 
-  const pronunciations = useMemo<HTMLAudioElement[]>(() => {
-    if (typeof Audio === "undefined") return [];
-    return selectedName.map((char) => {
-      const audio = new Audio(char?.pronunciation);
-      audio.playbackRate = 2;
-      return audio;
-    });
-  }, [selectedName]);
+  const onSubmit: SubmitHandler<Inputs> = async ({
+    givenName,
+    familyName,
+    gender,
+  }) => {
+    const newMingOptions = await getMingOptions(givenName, { gender });
+    setMingOptions(newMingOptions);
+
+    const newXingOptions = await getXingOptions(familyName);
+    setXingOptions(newXingOptions);
+
+    setSelectedIndices([0, 0, 0]);
+  };
 
   const onPlay = () => playAudioFiles(pronunciations);
 
