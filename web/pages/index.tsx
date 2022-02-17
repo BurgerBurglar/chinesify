@@ -92,13 +92,13 @@ const Home: NextPage = () => {
             className="rounded-md bg-blue-100 hover:bg-blue-200 active:bg-blue-300 text-black text-xl w-fit px-2 py-1"
             onClick={onCopy}
           >
-            {hasCopied ? "Copied" : "Copy"}
+            {hasCopied ? "copied" : "copy"}
           </button>
           <button
             className="rounded-md bg-blue-100 hover:bg-blue-200 active:bg-blue-300 text-black text-xl w-fit px-2 py-1"
             onClick={onPlay}
           >
-            Pronounce
+            pronounce
           </button>
         </div>
       </div>
