@@ -7,13 +7,14 @@ import NameForm from "../components/NameForm";
 import { getMingOptions, getXingOptions } from "../fetch";
 import { useClipboard } from "../hooks/useClipBoard";
 import { CharDetails, Inputs } from "../types";
+import { INITIAL_MING_OPTIONS, INITIAL_XING_OPTIONS } from "../utils/constants";
 import playAudioFiles from "../utils/playAudioFiles";
 
 const Home: NextPage = () => {
-  const [mingOptions, setMingOptions] = useState<
-    [CharDetails[], CharDetails[]]
-  >([[], []]);
-  const [xingOptions, setXingOptions] = useState<CharDetails[]>([]);
+  const [mingOptions, setMingOptions] =
+    useState<[CharDetails[], CharDetails[]]>(INITIAL_MING_OPTIONS);
+  const [xingOptions, setXingOptions] =
+    useState<CharDetails[]>(INITIAL_XING_OPTIONS);
 
   const [selectedIndices, setSelectedIndices] = useState([0, 0, 0]);
 

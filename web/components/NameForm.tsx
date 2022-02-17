@@ -9,6 +9,8 @@ interface NameFormProps {
 const NameForm: React.FC<NameFormProps> = ({ onSubmit }) => {
   const { register, handleSubmit } = useForm<Inputs>({
     defaultValues: {
+      givenName: "Chandan",
+      familyName: "Amonkar",
       gender: "m",
     },
   });
