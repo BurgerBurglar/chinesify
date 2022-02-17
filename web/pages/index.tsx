@@ -1,16 +1,15 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler } from "react-hook-form";
 import CharSelect from "../components/CharSelect";
+import NameForm from "../components/NameForm";
 import { getMingOptions, getXingOptions } from "../fetch";
 import { useClipboard } from "../hooks/useClipBoard";
 import { CharDetails, Inputs } from "../types";
 import playAudioFiles from "../utils/playAudioFiles";
 
 const Home: NextPage = () => {
-  const { register, handleSubmit } = useForm<Inputs>();
-
   const [mingOptions, setMingOptions] = useState<
     [CharDetails[], CharDetails[]]
   >([[], []]);
@@ -69,37 +68,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="items-center max-w-lg mx-auto">
-        <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex flex-col justify-between w-full">
-            <label htmlFor="given-name">Given Name</label>
-            <input
-              id="given-name"
-              className="text-3xl outline outline-1 outline-gray-200 text-red-800"
-              type="text"
-              required
-              {...register("givenName", { required: true })}
-            />
-          </div>
-          <div className="flex flex-col justify-between w-full">
-            <label htmlFor="family-name">Family Name</label>
-            <input
-              id="family-name"
-              className="text-3xl outline outline-1 outline-gray-200 text-green-800"
-              type="text"
-              required
-              {...register("familyName", { required: true })}
-            />
-          </div>
-          <fieldset id="gender" className="flex gap-2 items-center">
-            <input type="radio" id="Male" value="m" {...register("gender")} />
-            <label htmlFor="Male">Male</label>
-            <input type="radio" id="Female" value="f" {...register("gender")} />
-            <label htmlFor="Female">Female</label>
-          </fieldset>
-          <button className="rounded-md bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white text-xl w-fit px-2 py-1">
-            generate
-          </button>
-        </form>
+        <NameForm onSubmit={onSubmit} />
         <div className="flex gap-2">
           <CharSelect
             chars={xingOptions}
