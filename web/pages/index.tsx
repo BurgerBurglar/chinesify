@@ -89,7 +89,7 @@ const Home: NextPage = () => {
         </div>
         <div className="flex gap-3">
           <button
-            className="rounded-md bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white text-xl w-fit px-2 py-1"
+            className="rounded-md bg-blue-100 hover:bg-blue-200 active:bg-blue-300 text-black text-xl w-fit px-2 py-1"
             onClick={onCopy}
           >
             {hasCopied ? "Copied" : "Copy"}
