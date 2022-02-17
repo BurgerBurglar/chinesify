@@ -70,46 +70,48 @@ const Home: NextPage = () => {
       <div className="w-full h-full flex justify-center items-start pt-24">
         <div className="flex flex-col gap-5 justify-between items-center">
           <NameForm onSubmit={onSubmit} />
-          <div className="flex flex-col gap-3 items-center">
-            <div className="flex gap-2">
-              <CharSelect
-                chars={xingOptions}
-                isXing
-                selectIndex={selectedIndices[0]}
-                setSelectIndex={(selectIndex) =>
-                  setSelectedIndex(selectIndex, 0)
-                }
-              />
-              <CharSelect
-                chars={mingOptions[0]}
-                selectIndex={selectedIndices[1]}
-                setSelectIndex={(selectIndex) =>
-                  setSelectedIndex(selectIndex, 1)
-                }
-              />
-              <CharSelect
-                chars={mingOptions[1]}
-                selectIndex={selectedIndices[2]}
-                setSelectIndex={(selectIndex) =>
-                  setSelectedIndex(selectIndex, 2)
-                }
-              />
+          {xingOptions.length > 0 && mingOptions.length > 0 && (
+            <div className="flex flex-col gap-3 items-center">
+              <div className="flex gap-2">
+                <CharSelect
+                  chars={xingOptions}
+                  isXing
+                  selectIndex={selectedIndices[0]}
+                  setSelectIndex={(selectIndex) =>
+                    setSelectedIndex(selectIndex, 0)
+                  }
+                />
+                <CharSelect
+                  chars={mingOptions[0]}
+                  selectIndex={selectedIndices[1]}
+                  setSelectIndex={(selectIndex) =>
+                    setSelectedIndex(selectIndex, 1)
+                  }
+                />
+                <CharSelect
+                  chars={mingOptions[1]}
+                  selectIndex={selectedIndices[2]}
+                  setSelectIndex={(selectIndex) =>
+                    setSelectedIndex(selectIndex, 2)
+                  }
+                />
+              </div>
+              <div className="flex gap-3 justify-center w-full">
+                <button
+                  className="rounded-full bg-sky-200 hover:bg-sky-300 text-sky-800 text-md w-fit px-4 py-1"
+                  onClick={onCopy}
+                >
+                  copy
+                </button>
+                <button
+                  className="rounded-full bg-sky-200 hover:bg-sky-300 text-sky-800 text-md w-fit px-4 py-1"
+                  onClick={onPlay}
+                >
+                  pronounce
+                </button>
+              </div>
             </div>
-            <div className="flex gap-3 justify-center w-full">
-              <button
-                className="rounded-full bg-sky-200 hover:bg-sky-300 text-sky-800 text-md w-fit px-4 py-1"
-                onClick={onCopy}
-              >
-                copy
-              </button>
-              <button
-                className="rounded-full bg-sky-200 hover:bg-sky-300 text-sky-800 text-md w-fit px-4 py-1"
-                onClick={onPlay}
-              >
-                pronounce
-              </button>
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </>
