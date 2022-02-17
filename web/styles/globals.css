@@ -29,3 +29,7 @@ a {
 button:focus{
   box-shadow: 0 0 0 3px theme("colors.sky.200");
 }
+
+.result-char {
+  font-size: clamp(3rem, 25vw, 5rem);
+}
