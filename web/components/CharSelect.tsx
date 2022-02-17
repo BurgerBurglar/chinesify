@@ -32,7 +32,11 @@ const CharSelect: React.FC<CharSelectProps> = ({
         onChange={handleChange}
       >
         {chars.map((char, i) => (
-          <option className="text-lg bg-sky-50" key={char.char} value={i}>
+          <option
+            className="font-sans text-lg bg-sky-50"
+            key={char.char}
+            value={i}
+          >
             {char.char}
           </option>
         ))}
