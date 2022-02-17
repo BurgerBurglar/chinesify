@@ -9,6 +9,7 @@ export interface Inputs {
 export interface CharDetails {
   char: string;
   pinyin: string;
+  pronunciation: string;
 }
 
 export interface MingParams {

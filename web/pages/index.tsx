@@ -1,11 +1,13 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import CharSelect from "../components/CharSelect";
 import { getMingOptions, getXingOptions } from "../fetch";
 import { useClipboard } from "../hooks/useClipBoard";
 import { CharDetails, Inputs } from "../types";
+import playAudioFiles from "../utils/playAudioFiles";
+import { sleep } from "../utils/sleep";
 
 const Home: NextPage = () => {
   const { register, handleSubmit } = useForm<Inputs>();
@@ -39,13 +41,29 @@ const Home: NextPage = () => {
     });
   };
 
-  const fullname = [
-    xingOptions[selectedIndices[0]]?.char,
-    mingOptions[0][selectedIndices[1]]?.char,
-    mingOptions[1][selectedIndices[2]]?.char,
-  ].join("");
+  const selectedName = useMemo<(CharDetails | undefined)[]>(
+    () => [
+      xingOptions[selectedIndices[0]],
+      mingOptions[0][selectedIndices[1]],
+      mingOptions[1][selectedIndices[2]],
+    ],
+    [mingOptions, selectedIndices, xingOptions]
+  );
+
+  const fullname = selectedName.map((char) => char?.char).join("");
 
   const { hasCopied, onCopy } = useClipboard(fullname);
+
+  const pronunciations = useMemo<HTMLAudioElement[]>(() => {
+    if (typeof Audio === "undefined") return [];
+    return selectedName.map((char) => {
+      const audio = new Audio(char?.pronunciation);
+      audio.playbackRate = 2;
+      return audio;
+    });
+  }, [selectedName]);
+
+  const onPlay = () => playAudioFiles(pronunciations);
 
   return (
     <>
@@ -104,12 +122,20 @@ const Home: NextPage = () => {
             setSelectIndex={(selectIndex) => setSelectedIndex(selectIndex, 2)}
           />
         </div>
-        <button
-          className="rounded-md bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white text-xl w-fit px-2 py-1"
-          onClick={onCopy}
-        >
-          {hasCopied ? "Copied" : "Copy"}
-        </button>
+        <div className="flex gap-3">
+          <button
+            className="rounded-md bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white text-xl w-fit px-2 py-1"
+            onClick={onCopy}
+          >
+            {hasCopied ? "Copied" : "Copy"}
+          </button>
+          <button
+            className="rounded-md bg-blue-100 hover:bg-blue-200 active:bg-blue-300 text-black text-xl w-fit px-2 py-1"
+            onClick={onPlay}
+          >
+            Pronounce
+          </button>
+        </div>
       </div>
     </>
   );
