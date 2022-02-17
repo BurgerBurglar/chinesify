@@ -22,15 +22,25 @@ const Home: NextPage = () => {
 
   const { givenName, familyName, gender }: Inputs = watch();
 
+  const [error, setError] = useState<string>("");
+
   const { data: mingOptions, mutate: mutateMingOptions } = useSWRImmutable(
     "ming",
     () => getMingOptions(givenName, { gender }),
-    { fallbackData: INITIAL_MING_OPTIONS }
+    {
+      fallbackData: INITIAL_MING_OPTIONS,
+      onError: ({ message }) => setError(message),
+      shouldRetryOnError: false,
+    }
   );
   const { data: xingOptions, mutate: mutateXingOptions } = useSWRImmutable(
     "xing",
     () => getXingOptions(familyName),
-    { fallbackData: INITIAL_XING_OPTIONS }
+    {
+      fallbackData: INITIAL_XING_OPTIONS,
+      onError: ({ message }) => setError(message),
+      shouldRetryOnError: false,
+    }
   );
 
   const [selectedIndices, setSelectedIndices] = useState([0, 0, 0]);
@@ -63,6 +73,8 @@ const Home: NextPage = () => {
   const { onCopy } = useClipboard(fullname);
 
   const onSubmit: SubmitHandler<Inputs> = async () => {
+    setError("");
+
     mutateMingOptions();
     mutateXingOptions();
 
@@ -70,6 +82,9 @@ const Home: NextPage = () => {
   };
 
   const onPlay = () => playAudioFiles(pronunciations);
+
+  const shouldDisplayName =
+    error.length === 0 && xingOptions!.length > 0 && mingOptions!.length > 0;
 
   return (
     <>
@@ -85,7 +100,8 @@ const Home: NextPage = () => {
             handleSubmit={handleSubmit}
             onSubmit={onSubmit}
           />
-          {xingOptions!.length > 0 && mingOptions!.length > 0 && (
+          <div className="text-red-600">{error}</div>
+          {shouldDisplayName && (
             <div className="flex flex-col gap-3 items-center">
               <div className="flex gap-2">
                 <CharSelect
