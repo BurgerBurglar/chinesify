@@ -21,7 +21,7 @@ def is_chinese(language_code: Optional[str]) -> bool:
     return language_code[:2] == "zh"
 
 
-def translate(original_name: str, is_transliteration = True) -> str:
+def translate(original_name: str, is_transliteration=True) -> str:
     actual_query_prefix = query_prefix if is_transliteration else ""
     actual_result_prefixes = result_prefixes if is_transliteration else []
 
@@ -43,8 +43,8 @@ def translate(original_name: str, is_transliteration = True) -> str:
 
     if not is_chinese(guess_language(chinese_name)):
         raise ValueError(
-            "We don't know how to pronounce this :/"
-            + "Consider using the first syllables, or spelling it like an English word?"
+            f"""We don't know how to pronounce {chinese_name} :/
+Consider using the first syllables, or spelling it like an English word?"""
         )
 
     return {"chinese_name": chinese_name, "source_language": source_language}
