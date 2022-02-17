@@ -7,7 +7,6 @@ import { getMingOptions, getXingOptions } from "../fetch";
 import { useClipboard } from "../hooks/useClipBoard";
 import { CharDetails, Inputs } from "../types";
 import playAudioFiles from "../utils/playAudioFiles";
-import { sleep } from "../utils/sleep";
 
 const Home: NextPage = () => {
   const { register, handleSubmit } = useForm<Inputs>();
