@@ -23,21 +23,21 @@ const NameForm: React.FC<NameFormProps> = ({
       onSubmit={handleSubmit(onSubmit)}
     >
       <legend className="text-2xl">Tell me about yourself</legend>
-      <div className="flex flex-col justify-between w-full text-rose-800">
+      <div className="flex flex-col justify-between w-full text-rose-900">
         <label htmlFor="given-name">Given Name</label>
         <input
           id="given-name"
-          className="text-3xl border-b border-gray-300 focus:border-rose-800 focus:border-b-2 bg-transparent outline-none"
+          className="text-3xl border-b border-gray-300 focus:border-rose-900 focus:border-b-2 bg-transparent outline-none"
           type="text"
           required
           {...register("givenName", { required: true })}
         />
       </div>
-      <div className="flex flex-col justify-between w-full text-purple-800">
+      <div className="flex flex-col justify-between w-full text-purple-900">
         <label htmlFor="family-name">Family Name</label>
         <input
           id="family-name"
-          className="text-3xl border-b border-gray-300 focus:border-purple-800 focus:border-b-2 bg-transparent outline-none"
+          className="text-3xl border-b border-gray-300 focus:border-purple-900 focus:border-b-2 bg-transparent outline-none"
           type="text"
           required
           {...register("familyName", { required: true })}
@@ -49,7 +49,7 @@ const NameForm: React.FC<NameFormProps> = ({
         <input type="radio" id="Female" value="f" {...register("gender")} />
         <label htmlFor="Female">Female</label>
       </fieldset>
-      <button className="rounded-full bg-sky-600 hover:bg-sky-700 active:bg-sky-800 text-white text-xl w-fit px-4 py-1">
+      <button className="rounded-full bg-sky-600 hover:bg-sky-700 active:bg-sky-900 text-white text-xl w-fit px-4 py-1">
         generate
       </button>
     </form>

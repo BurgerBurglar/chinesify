@@ -135,13 +135,13 @@ const Home: NextPage = () => {
               </div>
               <div className="flex gap-3 justify-center w-full">
                 <button
-                  className="rounded-full bg-sky-200 hover:bg-sky-300 text-sky-800 text-md w-fit px-4 py-1"
+                  className="rounded-full bg-sky-200 hover:bg-sky-300 text-sky-900 text-md w-fit px-4 py-1"
                   onClick={onCopy}
                 >
                   copy
                 </button>
                 <button
-                  className="rounded-full bg-sky-200 hover:bg-sky-300 text-sky-800 text-md w-fit px-4 py-1"
+                  className="rounded-full bg-sky-200 hover:bg-sky-300 text-sky-900 text-md w-fit px-4 py-1"
                   onClick={onPlay}
                 >
                   pronounce
