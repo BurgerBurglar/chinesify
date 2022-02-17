@@ -8,15 +8,21 @@ import NameForm from "../components/NameForm";
 import { getMingOptions, getXingOptions } from "../fetch";
 import { useClipboard } from "../hooks/useClipBoard";
 import { Inputs } from "../types";
-import { INITIAL_MING_OPTIONS, INITIAL_XING_OPTIONS } from "../utils/constants";
+import {
+  INITIAL_FAMILY_NAME,
+  INITIAL_GENDER,
+  INITIAL_GIVEN_NAME,
+  INITIAL_MING_OPTIONS,
+  INITIAL_XING_OPTIONS,
+} from "../utils/constants";
 import playAudioFiles from "../utils/playAudioFiles";
 
 const Home: NextPage = () => {
   const { register, handleSubmit, watch } = useForm<Inputs>({
     defaultValues: {
-      givenName: "Chandan",
-      familyName: "Amonkar",
-      gender: "m",
+      givenName: INITIAL_GIVEN_NAME,
+      familyName: INITIAL_FAMILY_NAME,
+      gender: INITIAL_GENDER,
     },
   });
 

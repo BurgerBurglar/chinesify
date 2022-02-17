@@ -1,4 +1,8 @@
-import { CharDetails } from "../types";
+import { CharDetails, Gender } from "../types";
+
+export const INITIAL_GIVEN_NAME = "Chandan";
+export const INITIAL_FAMILY_NAME = "Amonkar";
+export const INITIAL_GENDER: Gender = "m";
 
 export const INITIAL_XING_OPTIONS = [
   {
