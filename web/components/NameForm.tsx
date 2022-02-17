@@ -1,19 +1,22 @@
 import React from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import {
+  SubmitHandler,
+  UseFormHandleSubmit,
+  UseFormRegister,
+} from "react-hook-form";
 import { Inputs } from "../types";
 
 interface NameFormProps {
   onSubmit: SubmitHandler<Inputs>;
+  register: UseFormRegister<Inputs>;
+  handleSubmit: UseFormHandleSubmit<Inputs>;
 }
 
-const NameForm: React.FC<NameFormProps> = ({ onSubmit }) => {
-  const { register, handleSubmit } = useForm<Inputs>({
-    defaultValues: {
-      givenName: "Chandan",
-      familyName: "Amonkar",
-      gender: "m",
-    },
-  });
+const NameForm: React.FC<NameFormProps> = ({
+  onSubmit,
+  register,
+  handleSubmit,
+}) => {
   return (
     <form
       className="flex flex-col items-center gap-2 text-sky-900 w-full"

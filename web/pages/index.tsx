@@ -1,20 +1,37 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
-import { SubmitHandler } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
+import useSWRImmutable from "swr/immutable";
 import CharSelect from "../components/CharSelect";
 import NameForm from "../components/NameForm";
 import { getMingOptions, getXingOptions } from "../fetch";
 import { useClipboard } from "../hooks/useClipBoard";
-import { CharDetails, Inputs } from "../types";
+import { Inputs } from "../types";
 import { INITIAL_MING_OPTIONS, INITIAL_XING_OPTIONS } from "../utils/constants";
 import playAudioFiles from "../utils/playAudioFiles";
 
 const Home: NextPage = () => {
-  const [mingOptions, setMingOptions] =
-    useState<[CharDetails[], CharDetails[]]>(INITIAL_MING_OPTIONS);
-  const [xingOptions, setXingOptions] =
-    useState<CharDetails[]>(INITIAL_XING_OPTIONS);
+  const { register, handleSubmit, watch } = useForm<Inputs>({
+    defaultValues: {
+      givenName: "Chandan",
+      familyName: "Amonkar",
+      gender: "m",
+    },
+  });
+
+  const { givenName, familyName, gender }: Inputs = watch();
+
+  const { data: mingOptions, mutate: mutateMingOptions } = useSWRImmutable(
+    "ming",
+    () => getMingOptions(givenName, { gender }),
+    { fallbackData: INITIAL_MING_OPTIONS }
+  );
+  const { data: xingOptions, mutate: mutateXingOptions } = useSWRImmutable(
+    "xing",
+    () => getXingOptions(familyName),
+    { fallbackData: INITIAL_XING_OPTIONS }
+  );
 
   const [selectedIndices, setSelectedIndices] = useState([0, 0, 0]);
 
@@ -27,12 +44,12 @@ const Home: NextPage = () => {
   };
 
   const selectedName = [
-    xingOptions[selectedIndices[0]],
-    mingOptions[0][selectedIndices[1]],
-    mingOptions[1][selectedIndices[2]],
+    xingOptions![selectedIndices[0]],
+    mingOptions![0][selectedIndices[1]],
+    mingOptions![1][selectedIndices[2]],
   ];
 
-  const fullname = selectedName.map((char) => char?.char).join("");
+  const fullname = selectedName.map((charDetail) => charDetail?.char).join("");
 
   const pronunciations =
     typeof Audio === "undefined"
@@ -43,18 +60,11 @@ const Home: NextPage = () => {
           return audio;
         });
 
-  const { hasCopied, onCopy } = useClipboard(fullname);
+  const { onCopy } = useClipboard(fullname);
 
-  const onSubmit: SubmitHandler<Inputs> = async ({
-    givenName,
-    familyName,
-    gender,
-  }) => {
-    const newMingOptions = await getMingOptions(givenName, { gender });
-    setMingOptions(newMingOptions);
-
-    const newXingOptions = await getXingOptions(familyName);
-    setXingOptions(newXingOptions);
+  const onSubmit: SubmitHandler<Inputs> = async () => {
+    mutateMingOptions();
+    mutateXingOptions();
 
     setSelectedIndices([0, 0, 0]);
   };
@@ -70,12 +80,16 @@ const Home: NextPage = () => {
       </Head>
       <div className="w-full max-w-sm h-full flex justify-center items-start pt-5 px-4 mx-auto">
         <div className="flex flex-col gap-5 justify-between items-center w-full">
-          <NameForm onSubmit={onSubmit} />
-          {xingOptions.length > 0 && mingOptions.length > 0 && (
+          <NameForm
+            register={register}
+            handleSubmit={handleSubmit}
+            onSubmit={onSubmit}
+          />
+          {xingOptions!.length > 0 && mingOptions!.length > 0 && (
             <div className="flex flex-col gap-3 items-center">
               <div className="flex gap-2">
                 <CharSelect
-                  chars={xingOptions}
+                  chars={xingOptions!}
                   isXing
                   selectIndex={selectedIndices[0]}
                   setSelectIndex={(selectIndex) =>
@@ -83,14 +97,14 @@ const Home: NextPage = () => {
                   }
                 />
                 <CharSelect
-                  chars={mingOptions[0]}
+                  chars={mingOptions![0]}
                   selectIndex={selectedIndices[1]}
                   setSelectIndex={(selectIndex) =>
                     setSelectedIndex(selectIndex, 1)
                   }
                 />
                 <CharSelect
-                  chars={mingOptions[1]}
+                  chars={mingOptions![1]}
                   selectIndex={selectedIndices[2]}
                   setSelectIndex={(selectIndex) =>
                     setSelectedIndex(selectIndex, 2)
