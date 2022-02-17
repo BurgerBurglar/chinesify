@@ -13,22 +13,26 @@ const NameForm: React.FC<NameFormProps> = ({ onSubmit }) => {
     },
   });
   return (
-    <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex flex-col justify-between w-full">
+    <form
+      className="flex flex-col items-center gap-2 text-sky-900"
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <legend className="text-2xl">Tell me about yourself</legend>
+      <div className="flex flex-col justify-between w-full text-rose-800">
         <label htmlFor="given-name">Given Name</label>
         <input
           id="given-name"
-          className="text-3xl outline outline-1 outline-gray-200 text-red-800"
+          className="text-3xl border-b border-gray-300 focus:border-rose-800 focus:border-b-2 bg-transparent outline-none"
           type="text"
           required
           {...register("givenName", { required: true })}
         />
       </div>
-      <div className="flex flex-col justify-between w-full">
+      <div className="flex flex-col justify-between w-full text-purple-800">
         <label htmlFor="family-name">Family Name</label>
         <input
           id="family-name"
-          className="text-3xl outline outline-1 outline-gray-200 text-green-800"
+          className="text-3xl border-b border-gray-300 focus:border-purple-800 focus:border-b-2 bg-transparent outline-none"
           type="text"
           required
           {...register("familyName", { required: true })}
@@ -40,7 +44,7 @@ const NameForm: React.FC<NameFormProps> = ({ onSubmit }) => {
         <input type="radio" id="Female" value="f" {...register("gender")} />
         <label htmlFor="Female">Female</label>
       </fieldset>
-      <button className="rounded-md bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white text-xl w-fit px-2 py-1">
+      <button className="rounded-full bg-sky-600 hover:bg-sky-700 active:bg-sky-800 text-white text-xl w-fit px-4 py-1">
         generate
       </button>
     </form>

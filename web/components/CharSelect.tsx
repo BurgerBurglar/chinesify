@@ -14,7 +14,7 @@ const CharSelect: React.FC<CharSelectProps> = ({
   selectIndex,
   setSelectIndex,
 }) => {
-  const color = isXing ? "green" : "red";
+  const color = isXing ? "purple" : "rose";
 
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setSelectIndex(parseInt(e.target.value));
@@ -22,17 +22,17 @@ const CharSelect: React.FC<CharSelectProps> = ({
 
   return (
     <div className="flex flex-col items-center">
-      <div className={`text-${color}-800 text-[2rem]`}>
+      <div className={`text-${color}-800 bg-transparent text-[2rem]`}>
         {chars[selectIndex]?.pinyin}
       </div>
       <select
-        className={`text-${color}-800 text-[5rem] w-[1.3em]`}
+        className={`text-${color}-800 bg-transparent text-[5rem] w-[1.3em]`}
         name="xing"
         value={selectIndex}
         onChange={handleChange}
       >
         {chars.map((char, i) => (
-          <option className="text-lg" key={char.char} value={i}>
+          <option className="text-lg bg-sky-50" key={char.char} value={i}>
             {char.char}
           </option>
         ))}
