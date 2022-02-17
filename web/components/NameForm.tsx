@@ -7,7 +7,11 @@ interface NameFormProps {
 }
 
 const NameForm: React.FC<NameFormProps> = ({ onSubmit }) => {
-  const { register, handleSubmit } = useForm<Inputs>();
+  const { register, handleSubmit } = useForm<Inputs>({
+    defaultValues: {
+      gender: "m",
+    },
+  });
   return (
     <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col justify-between w-full">
