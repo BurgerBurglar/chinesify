@@ -56,5 +56,5 @@ main {
 }
 
 select {
-  -webkit-appearance: auto
+  -webkit-appearance: menulist;
 }
