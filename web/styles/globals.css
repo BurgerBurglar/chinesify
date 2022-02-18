@@ -55,7 +55,3 @@ main {
   padding-left: clamp(1rem, 5vw, 5rem);
   padding-right: clamp(1rem, 5vw, 5rem);
 }
-
-select {
-  -webkit-appearance: menulist;
-}
