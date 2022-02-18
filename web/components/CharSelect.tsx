@@ -1,5 +1,6 @@
 import React, { ChangeEvent } from "react";
 import { CharDetails } from "../types";
+import { Select } from "@chakra-ui/select";
 
 interface CharSelectProps {
   chars: CharDetails[];
@@ -23,26 +24,32 @@ const CharSelect: React.FC<CharSelectProps> = ({
   return (
     <div className="flex flex-col items-center">
       <div
-        className={`text-${color}-900 bg-transparent text-[1.8rem] leading-3 relative right-2`}
+        className={`text-${color}-900 bg-transparent text-[1.8rem] leading-3 relative right-4`}
       >
         {chars[selectIndex]?.pinyin}
       </div>
-      <select
-        className={`text-${color}-900 bg-transparent font-caligraphy result-char w-[1.3em] h-[1.3em]`}
-        name="xing"
+      <Select
+        className={`text-${color}-900 font-caligraphy`}
+        variant="unstyled"
+        fontSize="5rem"
         value={selectIndex}
         onChange={handleChange}
+        sx={{
+          option: {
+            bgColor: "linkedin.100",
+          },
+        }}
       >
         {chars.map((char, i) => (
           <option
-            className="font-sans text-lg bg-sky-50"
+            className="font-sans text-lg bg-sky-100"
             key={char.char}
             value={i}
           >
             {char.char}
           </option>
         ))}
-      </select>
+      </Select>
     </div>
   );
 };
