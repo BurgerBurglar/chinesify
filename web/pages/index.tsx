@@ -93,7 +93,7 @@ const Home: NextPage = () => {
         <title>Chinesify</title>
         <meta
           name="description"
-          content="Your name In Chinese, without sounding funny."
+          content="Your name in Chinese, without sounding funny."
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
