@@ -103,7 +103,7 @@ const Home: NextPage = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="w-full max-w-sm h-full flex flex-col gap-3 justify-start items-center text-sky-900 pt-5 px-4 mx-auto">
+      <main className="w-full max-w-lg h-full flex flex-col gap-3 justify-start items-center bg-sky-700 bg-opacity-10 backdrop-blur-sm text-sky-900 pt-5 mx-auto">
         <h1 className="font-bold uppercase text-3xl">Chinesify</h1>
         <div className="text-centert text-lg">
           <p>Your name In Chinese,</p>
@@ -165,7 +165,7 @@ const Home: NextPage = () => {
             </div>
           )}
         </div>
-      </div>
+      </main>
     </>
   );
 };
