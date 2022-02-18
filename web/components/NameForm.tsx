@@ -1,5 +1,8 @@
+import { RadioGroup, Stack, Radio } from "@chakra-ui/react";
 import React from "react";
 import {
+  Control,
+  Controller,
   SubmitHandler,
   UseFormHandleSubmit,
   UseFormRegister,
@@ -11,12 +14,14 @@ interface NameFormProps {
   onSubmit: SubmitHandler<Inputs>;
   register: UseFormRegister<Inputs>;
   handleSubmit: UseFormHandleSubmit<Inputs>;
+  control: Control<Inputs, object>;
 }
 
 const NameForm: React.FC<NameFormProps> = ({
   onSubmit,
   register,
   handleSubmit,
+  control,
 }) => {
   return (
     <form
@@ -43,12 +48,18 @@ const NameForm: React.FC<NameFormProps> = ({
           {...register("familyName", { required: true })}
         />
       </div>
-      <fieldset id="gender" className="flex gap-2 items-center">
-        <input type="radio" id="Male" value="m" {...register("gender")} />
-        <label htmlFor="Male">Male</label>
-        <input type="radio" id="Female" value="f" {...register("gender")} />
-        <label htmlFor="Female">Female</label>
-      </fieldset>
+      <Controller
+        name="gender"
+        control={control}
+        render={({ field }) => (
+          <RadioGroup {...field}>
+            <Stack direction="row">
+              <Radio value="m">Male</Radio>
+              <Radio value="f">Female</Radio>
+            </Stack>
+          </RadioGroup>
+        )}
+      />
       <button className="rounded-full bg-sky-600 hover:bg-sky-700 active:bg-sky-900 text-white text-xl w-fit px-4 py-1">
         <div className="flex items-center gap-2">
           <RiMagicLine /> generate

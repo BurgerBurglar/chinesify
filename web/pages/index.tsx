@@ -20,7 +20,7 @@ import getAudioElements from "../utils/getAudioElements";
 import playAudioFiles from "../utils/playAudioFiles";
 
 const Home: NextPage = () => {
-  const { register, handleSubmit, watch } = useForm<Inputs>({
+  const { register, handleSubmit, control, watch } = useForm<Inputs>({
     defaultValues: {
       givenName: INITIAL_GIVEN_NAME,
       familyName: INITIAL_FAMILY_NAME,
@@ -109,6 +109,7 @@ const Home: NextPage = () => {
             register={register}
             handleSubmit={handleSubmit}
             onSubmit={onSubmit}
+            control={control}
           />
           <div className="text-red-600">{errors.join("\n")}</div>
           {shouldDisplayName && (
