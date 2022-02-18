@@ -100,7 +100,7 @@ const Home: NextPage = () => {
       <main className="w-full max-w-lg h-full flex flex-col gap-3 justify-start items-center bg-sky-100 text-sky-900 pt-5 mx-auto">
         <h1 className="font-bold uppercase text-3xl">Chinesify</h1>
         <div className="text-centert text-lg">
-          <p>Your name In Chinese,</p>
+          <p>Your name in Chinese,</p>
           <p>without sounding funny.</p>
         </div>
 
