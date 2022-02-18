@@ -31,14 +31,18 @@ const CharSelect: React.FC<CharSelectProps> = ({
       <Select
         className={`text-${color}-900 font-caligraphy`}
         variant="unstyled"
+        rounded={0}
         fontSize="5rem"
-        value={selectIndex}
-        onChange={handleChange}
+        _focus={{
+          borderBottom: "2px solid",
+        }}
         sx={{
           option: {
             bgColor: "linkedin.100",
           },
         }}
+        value={selectIndex}
+        onChange={handleChange}
       >
         {chars.map((char, i) => (
           <option
