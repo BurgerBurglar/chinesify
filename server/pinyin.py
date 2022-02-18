@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from click import style
 from pypinyin import lazy_pinyin, load_single_dict, Style
 from pypinyin.contrib.tone_convert import to_tone3
 import pandas as pd
@@ -30,6 +31,12 @@ def get_pronunciation(pinyin: str) -> str:
     return f"https://github.com/shikangkai/Chinese-Pinyin-Audio/blob/master/Pinyin-Female/{pinyin_tone3}.mp3?raw=true"
 
 
+def get_char_details(char: str) -> CharDetails:
+    pinyin = get_pinyin(char, Style.TONE)
+    pronunciation = get_pronunciation(pinyin)
+    return {"char": char, "pinyin": pinyin, "pronunciation": pronunciation}
+
+
 def beautify_ming(original: str, gender: str) -> list[list[CharDetails]]:
     if gender.lower() not in ["m", "f"]:
         raise ValueError("Gender must be either M or F.")
@@ -58,7 +65,7 @@ def beautify_ming(original: str, gender: str) -> list[list[CharDetails]]:
         if len(char_details_list) != 0:
             chosen_char_details = char_details_list[0:5]
         else:
-            chosen_char_details = [char]
+            chosen_char_details = [get_char_details(char)]
         char_details_options.append(chosen_char_details)
 
     return char_details_options
