@@ -16,6 +16,7 @@ import {
   INITIAL_MING_OPTIONS,
   INITIAL_XING_OPTIONS,
 } from "../utils/constants";
+import getAudioElements from "../utils/getAudioElements";
 import playAudioFiles from "../utils/playAudioFiles";
 
 const Home: NextPage = () => {
@@ -68,14 +69,7 @@ const Home: NextPage = () => {
 
   const fullname = selectedName.map((charDetail) => charDetail?.char).join("");
 
-  const pronunciations =
-    typeof Audio === "undefined"
-      ? []
-      : selectedName.map((char) => {
-          const audio = new Audio(char?.pronunciation);
-          audio.playbackRate = 2;
-          return audio;
-        });
+  const pronunciations = getAudioElements(selectedName);
 
   const { hasCopied, onCopy } = useClipboard(fullname);
 
