@@ -1,3 +1,4 @@
+import { Progress } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
@@ -32,24 +33,24 @@ const Home: NextPage = () => {
 
   const [errors, setErrors] = useState<string[]>([]);
 
-  const { data: mingOptions, mutate: mutateMingOptions } = useSWRImmutable(
-    "ming",
-    () => getMingOptions(givenName, { gender }),
-    {
-      fallbackData: INITIAL_MING_OPTIONS,
-      onError: ({ message }) => setErrors((prev) => [...prev, message]),
-      shouldRetryOnError: false,
-    }
-  );
-  const { data: xingOptions, mutate: mutateXingOptions } = useSWRImmutable(
-    "xing",
-    () => getXingOptions(familyName),
-    {
-      fallbackData: INITIAL_XING_OPTIONS,
-      onError: ({ message }) => setErrors((prev) => [...prev, message]),
-      shouldRetryOnError: false,
-    }
-  );
+  const {
+    data: mingOptions,
+    isValidating: isMingValidating,
+    mutate: mutateMingOptions,
+  } = useSWRImmutable("ming", () => getMingOptions(givenName, { gender }), {
+    fallbackData: INITIAL_MING_OPTIONS,
+    onError: ({ message }) => setErrors((prev) => [...prev, message]),
+    shouldRetryOnError: false,
+  });
+  const {
+    data: xingOptions,
+    isValidating: isXingValidating,
+    mutate: mutateXingOptions,
+  } = useSWRImmutable("xing", () => getXingOptions(familyName), {
+    fallbackData: INITIAL_XING_OPTIONS,
+    onError: ({ message }) => setErrors((prev) => [...prev, message]),
+    shouldRetryOnError: false,
+  });
 
   const [selectedIndices, setSelectedIndices] = useState([0, 0, 0]);
 
@@ -84,6 +85,8 @@ const Home: NextPage = () => {
 
   const onPlay = () => playAudioFiles(pronunciations);
 
+  const isValidating = isMingValidating || isXingValidating;
+
   const shouldDisplayName =
     errors.length === 0 && xingOptions!.length > 0 && mingOptions!.length > 0;
 
@@ -111,8 +114,8 @@ const Home: NextPage = () => {
             onSubmit={onSubmit}
             control={control}
           />
-          <div className="text-red-600">{errors.join("\n")}</div>
-          {shouldDisplayName && (
+          {isValidating && <Progress size="xs" isIndeterminate w="full" />}
+          {shouldDisplayName ? (
             <div className="flex flex-col gap-3 items-center">
               <div className="flex gap-2">
                 <CharSelect
@@ -158,6 +161,8 @@ const Home: NextPage = () => {
                 </button>
               </div>
             </div>
+          ) : (
+            <div className="text-red-600">{errors.join("\n")}</div>
           )}
         </div>
       </main>
