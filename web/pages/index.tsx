@@ -1,7 +1,7 @@
 import { Progress } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { MdCheck, MdContentCopy, MdPlayCircleOutline } from "react-icons/md";
 import useSWRImmutable from "swr/immutable";
@@ -62,15 +62,21 @@ const Home: NextPage = () => {
     });
   };
 
-  const selectedName = [
-    xingOptions![selectedIndices[0]],
-    mingOptions![0][selectedIndices[1]],
-    mingOptions![1][selectedIndices[2]],
-  ];
+  const selectedName = useMemo(
+    () => [
+      xingOptions![selectedIndices[0]],
+      mingOptions![0][selectedIndices[1]],
+      mingOptions![1][selectedIndices[2]],
+    ],
+    [mingOptions, selectedIndices, xingOptions]
+  );
 
   const fullname = selectedName.map((charDetail) => charDetail?.char).join("");
 
-  const pronunciations = getAudioElements(selectedName);
+  const pronunciations = useMemo(
+    () => getAudioElements(selectedName),
+    [selectedName]
+  );
 
   const { hasCopied, onCopy } = useClipboard(fullname);
 
