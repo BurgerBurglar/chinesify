@@ -1,3 +1,5 @@
+import { type } from "os";
+
 export type Gender = "m" | "f";
 
 export interface Inputs {
@@ -17,9 +19,11 @@ export interface MingParams {
   is_transliteration?: boolean;
 }
 
+export type MingOptions = [CharDetails[], CharDetails[]] | [CharDetails[]];
+
 export interface MingResult {
   translation: string;
-  options: [CharDetails[], CharDetails[]];
+  options: MingOptions;
 }
 
 export interface XingParams {

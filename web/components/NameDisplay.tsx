@@ -1,14 +1,14 @@
 import { useClipboard } from "@chakra-ui/react";
 import { Dispatch, SetStateAction, useMemo } from "react";
 import { MdCheck, MdContentCopy, MdPlayCircleOutline } from "react-icons/md";
-import { CharDetails } from "../types";
+import { CharDetails, MingOptions } from "../types";
 import getAudioElements from "../utils/getAudioElements";
 import playAudioFiles from "../utils/playAudioFiles";
 import CharSelect from "./CharSelect";
 
 interface NameDisplayProps {
-  xingOptions: CharDetails[] | undefined;
-  mingOptions: [CharDetails[], CharDetails[]] | undefined;
+  xingOptions: CharDetails[];
+  mingOptions: MingOptions;
   selectedIndices: number[];
   setSelectedIndices: Dispatch<SetStateAction<number[]>>;
 }
@@ -21,9 +21,9 @@ const NameDisplay: React.FC<NameDisplayProps> = ({
 }) => {
   const selectedName = useMemo(
     () => [
-      xingOptions![selectedIndices[0]],
-      mingOptions![0][selectedIndices[1]],
-      mingOptions![1][selectedIndices[2]],
+      xingOptions[selectedIndices[0]],
+      mingOptions[0][selectedIndices[1]],
+      (mingOptions[1] ?? mingOptions[0])[selectedIndices[2]],
     ],
     [mingOptions, selectedIndices, xingOptions]
   );
@@ -51,18 +51,18 @@ const NameDisplay: React.FC<NameDisplayProps> = ({
     <div className="flex flex-col gap-3 items-center">
       <div className="flex gap-2">
         <CharSelect
-          chars={xingOptions!}
+          chars={xingOptions}
           isXing
           selectIndex={selectedIndices[0]}
           setSelectIndex={(selectIndex) => setSelectedIndex(selectIndex, 0)}
         />
         <CharSelect
-          chars={mingOptions![0]}
+          chars={mingOptions[0]}
           selectIndex={selectedIndices[1]}
           setSelectIndex={(selectIndex) => setSelectedIndex(selectIndex, 1)}
         />
         <CharSelect
-          chars={mingOptions![1]}
+          chars={mingOptions[1] ?? mingOptions[0]}
           selectIndex={selectedIndices[2]}
           setSelectIndex={(selectIndex) => setSelectedIndex(selectIndex, 2)}
         />

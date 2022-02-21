@@ -91,8 +91,8 @@ const Home: NextPage = () => {
           {isValidating && <Progress size="xs" isIndeterminate w="full" />}
           {shouldDisplayName ? (
             <NameDisplay
-              xingOptions={xingOptions}
-              mingOptions={mingOptions}
+              xingOptions={xingOptions!}
+              mingOptions={mingOptions!}
               selectedIndices={selectedIndices}
               setSelectedIndices={setSelectedIndices}
             />
