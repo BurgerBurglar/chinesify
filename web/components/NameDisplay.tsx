@@ -29,6 +29,7 @@ const NameDisplay: React.FC<NameDisplayProps> = ({
   );
 
   const fullname = selectedName.map((charDetail) => charDetail?.char).join("");
+
   const { hasCopied, onCopy } = useClipboard(fullname);
 
   const setSelectedIndex = (selectIndex: number, charIndex: number) => {
