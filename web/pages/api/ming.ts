@@ -8,7 +8,7 @@ const getMing = async (
   res: NextApiResponse<MingResult>
 ) => {
   const { originalName, gender } = req.query;
-  const translation = await translate(originalName as string);
+  const translation = await translate((originalName as string).toLowerCase());
   const beautified = beautifyMing(translation, gender as Gender);
   res.status(200).json(beautified);
 };

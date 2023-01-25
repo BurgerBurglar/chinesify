@@ -8,7 +8,7 @@ const getXing = async (
   res: NextApiResponse<XingResult>
 ) => {
   const { originalName } = req.query;
-  const xing = await translate(originalName as string);
+  const xing = await translate((originalName as string).toLowerCase());
   res.status(200).json(beautifyXing(xing));
 };
 
