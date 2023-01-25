@@ -52,8 +52,14 @@ export const beautifyMing = (originalMing: string, gender: Gender) => {
   return beautifiedMing;
 };
 
-export const beautifyXing = (originalXing: string) => {
-  const pinyin = getPinyins(originalXing, "SURNAME")[0];
+export const beautifyXing = (
+  originalXing: string,
+  position = 0
+): CharDetails[] => {
+  if (originalXing.length === 0)
+    throw new Error("I don't know how to pronunce this name :/");
+
+  const pinyin = getPinyins(originalXing[position], "SURNAME")[0];
   console.log(pinyin);
   const filteredXingRows = xingRows
     .filter(({ pinyin: pinyinFromFile }) => pinyin === pinyinFromFile)
@@ -63,5 +69,18 @@ export const beautifyXing = (originalXing: string) => {
     pinyin: pinyin_tone,
     pronunciation: getPronunciation(pinyin_tone),
   })) as CharDetails[];
+
+  if (beautifiedXing.length === 0) {
+    // We can't find a good xing
+    if (position !== originalXing.length - 1) {
+      // We haven't used all of our options here, move to next char
+      return beautifyXing(originalXing, position + 1);
+    } else {
+      // We already got the end of the name, so go back to the first
+      const char = originalXing[0];
+      const pinyin = getPinyins(char, "SURNAME")[0];
+      return [{ char, pinyin, pronunciation: getPronunciation(pinyin) }];
+    }
+  }
   return beautifiedXing;
 };
