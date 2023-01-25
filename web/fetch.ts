@@ -8,46 +8,26 @@ import {
   INITIAL_XING_OPTIONS,
 } from "./utils/constants";
 
-const BASE_URL = "https://chinesify.herokuapp.com";
+const BASE_URL = "/api";
 
-export const getMingOptions = async (givenName: string, params: MingParams) => {
-  if (givenName === INITIAL_GIVEN_NAME && params.gender === INITIAL_GENDER) {
+export const getMingOptions = async ({ originalName, gender }: MingParams) => {
+  if (originalName === INITIAL_GIVEN_NAME && gender === INITIAL_GENDER) {
     return INITIAL_MING_OPTIONS;
   }
-
-  try {
-    const response = await axios.get<MingResult>(
-      BASE_URL + "/mings/" + givenName,
-      {
-        params,
-      }
-    );
-    return response.data.options;
-  } catch (err) {
-    if (axios.isAxiosError(err)) {
-      throw Error(err.response?.data.detail);
-    }
-  }
+  return (
+    await axios.get<MingResult>(BASE_URL + "/ming", {
+      params: { originalName, gender },
+    })
+  ).data;
 };
 
-export const getXingOptions = async (
-  familyName: string,
-  params?: XingParams
-) => {
-  if (familyName === INITIAL_FAMILY_NAME) {
+export const getXingOptions = async ({ originalName }: XingParams) => {
+  if (originalName === INITIAL_FAMILY_NAME) {
     return INITIAL_XING_OPTIONS;
   }
-  try {
-    const response = await axios.get<XingResult>(
-      BASE_URL + "/xings/" + familyName,
-      {
-        params,
-      }
-    );
-    return response.data.options;
-  } catch (err) {
-    if (axios.isAxiosError(err)) {
-      throw Error(err.response?.data.detail);
-    }
-  }
+  return (
+    await axios.get<XingResult>(BASE_URL + "/xing", {
+      params: { originalName },
+    })
+  ).data;
 };

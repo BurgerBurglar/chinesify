@@ -1,10 +1,10 @@
-import { CharDetails, Gender } from "../types";
+import { CharDetails, Gender, MingResult, XingResult } from "../types";
 
 export const INITIAL_GIVEN_NAME = "Chandan";
 export const INITIAL_FAMILY_NAME = "Amonkar";
 export const INITIAL_GENDER: Gender = "m";
 
-export const INITIAL_XING_OPTIONS = [
+export const INITIAL_XING_OPTIONS: XingResult = [
   {
     char: "孟",
     pinyin: "mèng",
@@ -19,7 +19,7 @@ export const INITIAL_XING_OPTIONS = [
   },
 ];
 
-export const INITIAL_MING_OPTIONS: [CharDetails[], CharDetails[]] = [
+export const INITIAL_MING_OPTIONS: MingResult = [
   [
     {
       char: "晨",

@@ -33,20 +33,28 @@ const Home: NextPage = () => {
     data: mingOptions,
     isValidating: isMingValidating,
     mutate: mutateMingOptions,
-  } = useSWRImmutable("ming", () => getMingOptions(givenName, { gender }), {
-    fallbackData: INITIAL_MING_OPTIONS,
-    onError: ({ message }) => setErrors((prev) => [...prev, message]),
-    shouldRetryOnError: false,
-  });
+  } = useSWRImmutable(
+    "ming",
+    () => getMingOptions({ originalName: givenName, gender }),
+    {
+      fallbackData: INITIAL_MING_OPTIONS,
+      onError: ({ message }) => setErrors((prev) => [...prev, message]),
+      shouldRetryOnError: false,
+    }
+  );
   const {
     data: xingOptions,
     isValidating: isXingValidating,
     mutate: mutateXingOptions,
-  } = useSWRImmutable("xing", () => getXingOptions(familyName), {
-    fallbackData: INITIAL_XING_OPTIONS,
-    onError: ({ message }) => setErrors((prev) => [...prev, message]),
-    shouldRetryOnError: false,
-  });
+  } = useSWRImmutable(
+    "xing",
+    () => getXingOptions({ originalName: familyName }),
+    {
+      fallbackData: INITIAL_XING_OPTIONS,
+      onError: ({ message }) => setErrors((prev) => [...prev, message]),
+      shouldRetryOnError: false,
+    }
+  );
 
   const [selectedIndices, setSelectedIndices] = useState([0, 0, 0]);
 
@@ -74,14 +82,14 @@ const Home: NextPage = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="w-full max-w-lg h-full flex flex-col gap-3 justify-start items-center bg-sky-100 text-sky-900 pt-5 mx-auto">
-        <h1 className="font-bold uppercase text-3xl">Chinesify</h1>
-        <div className="text-centert text-lg">
+      <main className="flex flex-col items-center justify-start w-full h-full max-w-lg gap-3 pt-5 mx-auto bg-sky-100 text-sky-900">
+        <h1 className="text-3xl font-bold uppercase">Chinesify</h1>
+        <div className="text-lg text-centert">
           <p>Your name in Chinese,</p>
           <p>without sounding funny.</p>
         </div>
 
-        <div className="flex flex-col gap-5 justify-between items-center w-full">
+        <div className="flex flex-col items-center justify-between w-full gap-5">
           <NameForm
             register={register}
             handleSubmit={handleSubmit}
