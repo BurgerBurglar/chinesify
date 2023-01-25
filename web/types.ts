@@ -27,6 +27,7 @@ export interface MingRow {
   position: string;
   pinyin: string;
   pinyin_tone: string;
+  pinyin_tone_number: string;
 }
 
 export interface XingParams {
@@ -39,4 +40,5 @@ export interface XingRow {
   xing: string;
   pinyin: string;
   pinyin_tone: string;
+  pinyin_tone_number: string;
 }

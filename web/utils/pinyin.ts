@@ -1,7 +1,7 @@
 import { readFile } from "fs/promises";
 import neatCsv from "neat-csv";
 import p from "pinyin";
-import { IPinyinMode } from "pinyin/lib/declare";
+import { IPinyinMode, IPinyinStyle } from "pinyin/lib/declare";
 import { CharDetails, Gender, MingResult, MingRow, XingRow } from "../types";
 
 const xingsRaw = await readFile("./data/xings.csv", { encoding: "utf-8" });
@@ -10,13 +10,15 @@ const xingRows = await neatCsv<XingRow>(xingsRaw);
 const mingsRaw = await readFile("./data/ming_chars.csv", { encoding: "utf-8" });
 const mingRows = await neatCsv<MingRow>(mingsRaw);
 
-const getPronunciation = (pinyinTone: string) => {
-  const pinyinToneNumber = p(pinyinTone, { style: "TO3NE" });
+const getPronunciation = (pinyinToneNumber: string) => {
   return `https://github.com/shikangkai/Chinese-Pinyin-Audio/blob/master/Pinyin-Female/${pinyinToneNumber}.mp3?raw=true`;
 };
 
-const getPinyins = (chars: string, mode: IPinyinMode) =>
-  p(chars, { style: "normal", mode }).map((el) => el[0]);
+const getPinyins = (
+  chars: string,
+  mode: IPinyinMode,
+  style: IPinyinStyle = "normal"
+) => p(chars, { style, mode }).map((el) => el[0]);
 
 export const beautifyMing = (originalMing: string, gender: Gender) => {
   const twoCharMing =
@@ -42,10 +44,10 @@ export const beautifyMing = (originalMing: string, gender: Gender) => {
   ] as [MingRow[], MingRow[]];
 
   const beautifiedMing = filteredMingRows.map((rows) =>
-    rows.map(({ char, pinyin_tone }) => ({
+    rows.map(({ char, pinyin_tone, pinyin_tone_number }) => ({
       char,
       pinyin: pinyin_tone,
-      pronunciation: getPronunciation(pinyin_tone),
+      pronunciation: getPronunciation(pinyin_tone_number),
     }))
   ) as MingResult;
 
@@ -60,15 +62,17 @@ export const beautifyXing = (
     throw new Error("I don't know how to pronunce this name :/");
 
   const pinyin = getPinyins(originalXing[position], "SURNAME")[0];
-  console.log(pinyin);
   const filteredXingRows = xingRows
     .filter(({ pinyin: pinyinFromFile }) => pinyin === pinyinFromFile)
     .slice(0, 5);
-  const beautifiedXing = filteredXingRows.map(({ xing, pinyin_tone }) => ({
-    char: xing,
-    pinyin: pinyin_tone,
-    pronunciation: getPronunciation(pinyin_tone),
-  })) as CharDetails[];
+
+  const beautifiedXing = filteredXingRows.map(
+    ({ xing, pinyin_tone, pinyin_tone_number }) => ({
+      char: xing,
+      pinyin: pinyin_tone,
+      pronunciation: getPronunciation(pinyin_tone_number),
+    })
+  ) as CharDetails[];
 
   if (beautifiedXing.length === 0) {
     // We can't find a good xing
@@ -78,7 +82,7 @@ export const beautifyXing = (
     } else {
       // We already got the end of the name, so go back to the first
       const char = originalXing[0];
-      const pinyin = getPinyins(char, "SURNAME")[0];
+      const pinyin = getPinyins(char, "SURNAME", "TONE2")[0];
       return [{ char, pinyin, pronunciation: getPronunciation(pinyin) }];
     }
   }
