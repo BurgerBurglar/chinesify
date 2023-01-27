@@ -4,7 +4,13 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import useSWRImmutable from "swr/immutable";
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
 import NameDisplay from "../components/NameDisplay";
 import NameForm from "../components/NameForm";
 import { getMingOptions, getXingOptions } from "../fetch";
@@ -35,48 +41,33 @@ const Home: NextPage = () => {
 
   const [errors, setErrors] = useState<string[]>([]);
 
-  const {
-    data: mingOptions,
-    isValidating: isMingValidating,
-    mutate: mutateMingOptions,
-  } = useSWRImmutable(
-    "ming",
-    () => getMingOptions({ originalName: givenName, gender }),
-    {
-      fallbackData: INITIAL_MING_OPTIONS,
-      onError: ({ message }) => setErrors((prev) => [...prev, message]),
-      shouldRetryOnError: false,
-    }
-  );
-  const {
-    data: xingOptions,
-    isValidating: isXingValidating,
-    mutate: mutateXingOptions,
-  } = useSWRImmutable(
-    "xing",
-    () => getXingOptions({ originalName: familyName }),
-    {
-      fallbackData: INITIAL_XING_OPTIONS,
-      onError: ({ message }) => setErrors((prev) => [...prev, message]),
-      shouldRetryOnError: false,
-    }
-  );
+  const ming = useQuery({
+    queryKey: ["ming"],
+    queryFn: () => getMingOptions({ originalName: givenName, gender }),
+    onError: ({ message }) => setErrors((prev) => [...prev, message]),
+    initialData: INITIAL_MING_OPTIONS,
+  });
+
+  const xing = useQuery({
+    queryKey: ["xing", familyName],
+    queryFn: () => getXingOptions({ originalName: familyName }),
+    onError: ({ message }) => setErrors((prev) => [...prev, message]),
+    initialData: INITIAL_XING_OPTIONS,
+  });
 
   const [selectedIndices, setSelectedIndices] = useState([0, 0, 0]);
 
   const onSubmit: SubmitHandler<Inputs> = async () => {
     setErrors([]);
-
-    mutateMingOptions();
-    mutateXingOptions();
-
+    ming.refetch();
+    xing.refetch();
     setSelectedIndices([0, 0, 0]);
   };
 
-  const isValidating = isMingValidating || isXingValidating;
+  const isLoading = ming.isLoading || xing.isLoading;
 
   const shouldDisplayName =
-    errors.length === 0 && xingOptions!.length > 0 && mingOptions!.length > 0;
+    errors.length === 0 && ming.data!.length > 0 && xing.data!.length > 0;
 
   return (
     <>
@@ -106,11 +97,11 @@ const Home: NextPage = () => {
             onSubmit={onSubmit}
             control={control}
           />
-          {isValidating && <Progress size="xs" isIndeterminate w="full" />}
+          {isLoading && <Progress size="xs" isIndeterminate w="full" />}
           {shouldDisplayName ? (
             <NameDisplay
-              xingOptions={xingOptions!}
-              mingOptions={mingOptions!}
+              xingOptions={xing.data!}
+              mingOptions={ming.data!}
               selectedIndices={selectedIndices}
               setSelectedIndices={setSelectedIndices}
             />
