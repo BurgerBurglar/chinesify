@@ -81,7 +81,10 @@ const Home: NextPage = () => {
       </Head>
       <main className="flex flex-col items-center justify-start w-full h-full max-w-lg gap-3 pt-5 mx-auto bg-sky-100 text-sky-900">
         <h1
-          className={`text-3xl font-bold uppercase ${nanumMyeongjo.className}`}
+          className={`${nanumMyeongjo.className} 
+          text-transparent bg-clip-text 
+          bg-gradient-to-r from-cyan-900 to-sky-600 
+          text-5xl font-bold uppercase mt-5`}
         >
           Chinesify
         </h1>
