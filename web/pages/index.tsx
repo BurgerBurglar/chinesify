@@ -1,4 +1,5 @@
 import { Progress } from "@chakra-ui/react";
+import { Nanum_Myeongjo } from "@next/font/google";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
@@ -15,6 +16,11 @@ import {
   INITIAL_MING_OPTIONS,
   INITIAL_XING_OPTIONS,
 } from "../utils/constants";
+
+const nanumMyeongjo = Nanum_Myeongjo({
+  weight: "800",
+  subsets: ["latin"],
+});
 
 const Home: NextPage = () => {
   const { register, handleSubmit, control, watch } = useForm<Inputs>({
@@ -83,7 +89,11 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex flex-col items-center justify-start w-full h-full max-w-lg gap-3 pt-5 mx-auto bg-sky-100 text-sky-900">
-        <h1 className="text-3xl font-bold uppercase">Chinesify</h1>
+        <h1
+          className={`text-3xl font-bold uppercase ${nanumMyeongjo.className}`}
+        >
+          Chinesify
+        </h1>
         <div className="text-lg text-centert">
           <p>Your name in Chinese,</p>
           <p>without sounding funny.</p>
