@@ -49,7 +49,7 @@ const Home: NextPage = () => {
   });
 
   const xing = useQuery({
-    queryKey: ["xing", familyName],
+    queryKey: ["xing"],
     queryFn: () => getXingOptions({ originalName: familyName }),
     onError: ({ message }) => setErrors((prev) => [...prev, message]),
     initialData: INITIAL_XING_OPTIONS,
@@ -79,7 +79,11 @@ const Home: NextPage = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="flex flex-col items-center justify-start w-full h-full max-w-lg gap-3 pt-5 mx-auto bg-sky-100 text-sky-900">
+      <main
+        className={`flex flex-col items-center justify-start gap-3
+      w-full h-full max-w-lg pt-5 mx-auto 
+      bg-sky-100 text-sky-900`}
+      >
         <h1
           className={`${nanumMyeongjo.className} 
           text-transparent bg-clip-text 
