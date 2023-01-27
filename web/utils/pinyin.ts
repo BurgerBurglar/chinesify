@@ -51,6 +51,19 @@ export const beautifyMing = (originalMing: string, gender: Gender) => {
     }))
   ) as MingResult;
 
+  if (!beautifiedMing[0].length) {
+    beautifiedMing[0] = [
+      {
+        char: "小",
+        pinyin: "xiǎo",
+        pronunciation: getPronunciation("xiao3"),
+      },
+    ];
+  }
+  if (!beautifiedMing[1].length) {
+    beautifiedMing[1] = beautifiedMing[0];
+  }
+
   return beautifiedMing;
 };
 
