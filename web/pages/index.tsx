@@ -1,16 +1,10 @@
 import { Progress } from "@chakra-ui/react";
 import { Nanum_Myeongjo } from "@next/font/google";
+import { useQuery } from "@tanstack/react-query";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-  QueryClient,
-  QueryClientProvider,
-} from "@tanstack/react-query";
 import NameDisplay from "../components/NameDisplay";
 import NameForm from "../components/NameForm";
 import { getMingOptions, getXingOptions } from "../fetch";
@@ -19,8 +13,6 @@ import {
   INITIAL_FAMILY_NAME,
   INITIAL_GENDER,
   INITIAL_GIVEN_NAME,
-  INITIAL_MING_OPTIONS,
-  INITIAL_XING_OPTIONS,
 } from "../utils/constants";
 
 const nanumMyeongjo = Nanum_Myeongjo({
@@ -45,14 +37,12 @@ const Home: NextPage = () => {
     queryKey: ["ming"],
     queryFn: () => getMingOptions({ originalName: givenName, gender }),
     onError: ({ message }) => setErrors((prev) => [...prev, message]),
-    initialData: INITIAL_MING_OPTIONS,
   });
 
   const xing = useQuery({
     queryKey: ["xing"],
     queryFn: () => getXingOptions({ originalName: familyName }),
     onError: ({ message }) => setErrors((prev) => [...prev, message]),
-    initialData: INITIAL_XING_OPTIONS,
   });
 
   const [selectedIndices, setSelectedIndices] = useState([0, 0, 0]);
@@ -67,7 +57,7 @@ const Home: NextPage = () => {
   const isLoading = ming.isLoading || xing.isLoading;
 
   const shouldDisplayName =
-    errors.length === 0 && ming.data!.length > 0 && xing.data!.length > 0;
+    errors.length === 0 && ming.data?.length && xing.data?.length;
 
   return (
     <>
