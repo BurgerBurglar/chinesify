@@ -36,13 +36,15 @@ const Home: NextPage = () => {
   const ming = useQuery({
     queryKey: ["ming"],
     queryFn: () => getMingOptions({ originalName: givenName, gender }),
-    onError: ({ message }) => setErrors((prev) => [...prev, message]),
+    onError: ({ response: { data: errorMessage } }) =>
+      setErrors((prev) => [...prev, errorMessage]),
   });
 
   const xing = useQuery({
     queryKey: ["xing"],
     queryFn: () => getXingOptions({ originalName: familyName }),
-    onError: ({ message }) => setErrors((prev) => [...prev, message]),
+    onError: ({ response: { data: errorMessage } }) =>
+      setErrors((prev) => [...prev, errorMessage]),
   });
 
   const [selectedIndices, setSelectedIndices] = useState([0, 0, 0]);
@@ -54,10 +56,13 @@ const Home: NextPage = () => {
     setSelectedIndices([0, 0, 0]);
   };
 
-  const isLoading = ming.isLoading || xing.isLoading;
+  const isFetching = ming.isFetching || xing.isFetching;
 
   const shouldDisplayName =
-    errors.length === 0 && ming.data?.length && xing.data?.length;
+    !isFetching &&
+    errors.length === 0 &&
+    ming.data?.length &&
+    xing.data?.length;
 
   return (
     <>
@@ -69,11 +74,7 @@ const Home: NextPage = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main
-        className={`flex flex-col items-center justify-start gap-3
-      w-full h-full max-w-lg pt-5 mx-auto 
-      bg-sky-100 text-sky-900`}
-      >
+      <main className="flex flex-col items-center justify-start w-full h-full max-w-lg gap-3 pt-5 mx-auto bg-sky-100 text-sky-900">
         <h1
           className={`${nanumMyeongjo.className} 
           text-transparent bg-clip-text 
@@ -94,7 +95,7 @@ const Home: NextPage = () => {
             onSubmit={onSubmit}
             control={control}
           />
-          {isLoading && <Progress size="xs" isIndeterminate w="full" />}
+          {isFetching && <Progress size="xs" isIndeterminate w="full" />}
           {shouldDisplayName ? (
             <NameDisplay
               xingOptions={xing.data!}
@@ -103,7 +104,9 @@ const Home: NextPage = () => {
               setSelectedIndices={setSelectedIndices}
             />
           ) : (
-            <div className="text-red-600">{errors.join("\n")}</div>
+            <div className="text-red-600 whitespace-pre-wrap">
+              {errors.join("\n")}
+            </div>
           )}
         </div>
       </main>
