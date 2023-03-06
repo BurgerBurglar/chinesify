@@ -1,13 +1,19 @@
 import { readFile } from "fs/promises";
 import neatCsv from "neat-csv";
+import path from "path";
 import p from "pinyin";
 import { IPinyinMode, IPinyinStyle } from "pinyin/lib/declare";
 import { CharDetails, Gender, MingResult, MingRow, XingRow } from "../types";
 
-const xingsRaw = await readFile("./data/xings.csv", { encoding: "utf-8" });
+const xingsRaw = await readFile(path.join(process.cwd(), "data/xings.csv"), {
+  encoding: "utf-8",
+});
 const xingRows = await neatCsv<XingRow>(xingsRaw);
 
-const mingsRaw = await readFile("./data/ming_chars.csv", { encoding: "utf-8" });
+const mingsRaw = await readFile(
+  path.join(process.cwd(), "data/ming_chars.csv"),
+  { encoding: "utf-8" }
+);
 const mingRows = await neatCsv<MingRow>(mingsRaw);
 
 const getPronunciation = (pinyinToneNumber: string) => {
