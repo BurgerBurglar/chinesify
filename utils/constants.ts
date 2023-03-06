@@ -1,4 +1,4 @@
-import { CharDetails, Gender, MingResult, XingResult } from "../types";
+import { Gender, MingResult, XingResult } from "../types";
 
 export const INITIAL_GIVEN_NAME = "Chandan";
 export const INITIAL_FAMILY_NAME = "Amonkar";

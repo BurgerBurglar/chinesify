@@ -1,5 +1,4 @@
 import axios from "axios";
-import { capitalize } from "./name";
 
 const TRANSLATE_API_URL = "https://www.googleapis.com/language/translate/v2";
 const TRANSLATION_KEY = process.env["TRANSLATION_KEY"];
