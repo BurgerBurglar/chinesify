@@ -21,10 +21,7 @@ const getPinyins = (
 ) => p(chars, { style, mode }).map((el) => el[0]);
 
 export const beautifyMing = (originalMing: string, gender: Gender) => {
-  const twoCharMing =
-    originalMing.length === 1
-      ? originalMing.repeat(2)
-      : originalMing.slice(0, 2);
+  const twoCharMing = originalMing.slice(0, 2);
 
   const pinyins = getPinyins(twoCharMing, "NORMAL");
 
@@ -54,9 +51,11 @@ export const beautifyMing = (originalMing: string, gender: Gender) => {
   if (!beautifiedMing[0].length) {
     beautifiedMing[0] = [
       {
-        char: "小",
-        pinyin: "xiǎo",
-        pronunciation: getPronunciation("xiao3"),
+        char: originalMing[0],
+        pinyin: getPinyins(originalMing[0], "NORMAL")[0],
+        pronunciation: getPronunciation(
+          getPinyins(originalMing[0], "NORMAL", "TONE2")[0]
+        ),
       },
     ];
   }

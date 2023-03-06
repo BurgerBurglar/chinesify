@@ -38,7 +38,7 @@ const translate = async (
     if (!shouldTryAgain)
       throw new Error("We don't know how to pronounce this name");
     // Try it one more time, but that's it
-    return translate(capitalize(originalName), false);
+    return translate(originalName.toLowerCase(), false);
   }
   return translation;
 };

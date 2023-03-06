@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { Gender, MingResult } from "../../types";
+import { capitalize } from "../../utils/name";
 import { beautifyMing } from "../../utils/pinyin";
 import translate from "../../utils/translate";
 
@@ -9,7 +10,7 @@ const getMing = async (
 ) => {
   const { originalName, gender } = req.query;
   try {
-    const translation = await translate((originalName as string).toLowerCase());
+    const translation = await translate(capitalize(originalName as string));
     const beautified = beautifyMing(translation, gender as Gender);
     res.status(200).json(beautified);
   } catch (error) {

@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { XingResult } from "../../types";
+import { capitalize } from "../../utils/name";
 import { beautifyXing } from "../../utils/pinyin";
 import translate from "../../utils/translate";
 
@@ -9,7 +10,7 @@ const getXing = async (
 ) => {
   const { originalName } = req.query;
   try {
-    const xing = await translate((originalName as string).toLowerCase());
+    const xing = await translate(capitalize(originalName as string));
     res.status(200).json(beautifyXing(xing));
   } catch (error) {
     res
