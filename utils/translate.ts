@@ -10,7 +10,7 @@ const META_PARAMS = {
 };
 
 const QUERY_PREFIX = "my name is ";
-const RESULT_PREFIXES = ["我的名字是", "我的名字", "我叫"];
+const RESULT_PREFIXES = ["我的名字是", "我的名字叫", "我的名字", "我叫"];
 
 const translate = async (
   originalName: string,
