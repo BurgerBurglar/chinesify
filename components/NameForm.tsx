@@ -25,14 +25,14 @@ const NameForm: React.FC<NameFormProps> = ({
 }) => {
   return (
     <form
-      className="flex flex-col items-center gap-2 w-full"
+      className="flex flex-col items-center w-full gap-2"
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className="flex flex-col justify-between w-full text-rose-900">
         <label htmlFor="given-name">Given Name</label>
         <input
           id="given-name"
-          className="text-3xl border-b border-gray-300 focus:border-rose-900 focus:border-b-2 bg-transparent outline-none"
+          className="text-3xl bg-transparent border-b border-gray-300 outline-none focus:border-rose-900 focus:border-b-2"
           type="text"
           required
           {...register("givenName", { required: true })}
@@ -42,7 +42,7 @@ const NameForm: React.FC<NameFormProps> = ({
         <label htmlFor="family-name">Family Name</label>
         <input
           id="family-name"
-          className="text-3xl border-b border-gray-300 focus:border-purple-900 focus:border-b-2 bg-transparent outline-none"
+          className="text-3xl bg-transparent border-b border-gray-300 outline-none focus:border-purple-900 focus:border-b-2"
           type="text"
           required
           {...register("familyName", { required: true })}
@@ -60,7 +60,7 @@ const NameForm: React.FC<NameFormProps> = ({
           </RadioGroup>
         )}
       />
-      <button className="rounded-full bg-sky-600 hover:bg-sky-700 active:bg-sky-900 text-white text-xl w-fit px-4 py-1">
+      <button className="px-4 py-1 text-xl text-white rounded-full bg-sky-600 hover:bg-sky-700 active:bg-sky-900 w-fit">
         <div className="flex items-center gap-2">
           <RiMagicLine /> generate
         </div>

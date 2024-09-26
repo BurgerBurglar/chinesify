@@ -5,6 +5,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import LanguageTooltip from "../components/LanguageTooltip";
 import NameDisplay from "../components/NameDisplay";
 import NameForm from "../components/NameForm";
 import { getMingOptions, getXingOptions } from "../fetch";
@@ -87,7 +88,6 @@ const Home: NextPage = () => {
           <p>Your name in Chinese,</p>
           <p>without sounding funny.</p>
         </div>
-
         <div className="flex flex-col items-center justify-between w-full gap-5">
           <NameForm
             register={register}
@@ -109,6 +109,7 @@ const Home: NextPage = () => {
             </div>
           )}
         </div>
+        <LanguageTooltip />
       </main>
     </>
   );
