@@ -75,20 +75,22 @@ const Home: NextPage = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="flex flex-col items-center justify-start w-full h-full max-w-lg gap-3 pt-5 mx-auto bg-sky-100 text-sky-900">
-        <h1
-          className={`${nanumMyeongjo.className} 
-          text-transparent bg-clip-text 
-          bg-gradient-to-r from-cyan-900 to-sky-600 
-          text-5xl font-bold uppercase mt-5`}
-        >
-          Chinesify
-        </h1>
-        <div className="text-lg text-centert">
-          <p>Your name in Chinese,</p>
-          <p>without sounding funny.</p>
-        </div>
-        <div className="flex flex-col items-center justify-between w-full gap-5">
+      <main className="flex flex-col items-center justify-start w-full h-full max-w-lg gap-8 pt-5 mx-auto bg-sky-100 text-sky-900">
+        <section className="flex flex-col items-center text-center">
+          <h1
+            className={`${nanumMyeongjo.className}
+            text-transparent bg-clip-text
+            bg-gradient-to-r from-cyan-900 to-sky-600
+            text-5xl font-bold uppercase mt-5`}
+          >
+            Chinesify
+          </h1>
+          <div className="text-lg text-centert">
+            <p>Your name in Chinese,</p>
+            <p>without sounding funny.</p>
+          </div>
+        </section>
+        <div className="flex flex-col items-center justify-between w-full gap-10">
           <NameForm
             register={register}
             handleSubmit={handleSubmit}

@@ -29,7 +29,9 @@ const NameForm: React.FC<NameFormProps> = ({
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className="flex flex-col justify-between w-full text-rose-900">
-        <label htmlFor="given-name">Given Name</label>
+        <label htmlFor="given-name" className="font-semibold">
+          Given Name
+        </label>
         <input
           id="given-name"
           className="text-3xl bg-transparent border-b border-gray-300 outline-none focus:border-rose-900 focus:border-b-2"
@@ -39,7 +41,9 @@ const NameForm: React.FC<NameFormProps> = ({
         />
       </div>
       <div className="flex flex-col justify-between w-full text-purple-900">
-        <label htmlFor="family-name">Family Name</label>
+        <label htmlFor="family-name" className="font-semibold">
+          Family Name
+        </label>
         <input
           id="family-name"
           className="text-3xl bg-transparent border-b border-gray-300 outline-none focus:border-purple-900 focus:border-b-2"
